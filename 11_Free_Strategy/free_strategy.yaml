@@ -1,0 +1,49 @@
+---
+# YAML documents begin with the document separator ---
+
+# The minus in YAML this indicates a list item.  The playbook contains a list
+# of plays, with each play being a dictionary
+-
+
+  # Hosts: where our play will run and options it will run with
+  hosts: linux
+  gather_facts: false
+  strategy: free
+
+  # Tasks: the list of tasks that will be executed within the play, this section
+  # can also be used for pre and post tasks
+  tasks:
+    #
+    # For informational purposes only, delay will be as follows -
+    #
+    # centos1 = 0
+    # centos2 = 2
+    # centos3 = 4
+    # ubuntu1 = 6
+    # ubuntu2 = 8
+    # ubuntu3 = 10
+    #
+    - name: Show sleep delay for each host
+      debug:
+        msg: "{{ansible_play_hosts.index(inventory_hostname)|int * 2}}"
+
+    - name: Task 1
+      command: "/bin/sleep {{ansible_play_hosts.index(inventory_hostname)|int * 2}}"
+
+    - name: Task 2
+      command: "/bin/sleep {{ansible_play_hosts.index(inventory_hostname)|int}}"
+
+    - name: Task 3
+      command: "/bin/sleep {{ansible_play_hosts.index(inventory_hostname)|int}}"
+
+    - name: Task 4
+      command: "/bin/sleep {{ansible_play_hosts.index(inventory_hostname)|int}}"
+
+    - name: Task 5
+      command: "/bin/sleep {{ansible_play_hosts.index(inventory_hostname)|int}}"
+
+    - name: Task 6
+      command: "/bin/sleep {{ansible_play_hosts.index(inventory_hostname)|int}}"
+
+# Three dots indicate the end of a YAML document
+...
